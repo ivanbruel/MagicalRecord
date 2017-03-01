@@ -36,9 +36,8 @@ NSString *const MagicalRecordShouldDeletePersistentStoreOnModelMismatchKey = @"M
 - (NSPersistentStore *)MR_reinitializeStoreAtURL:(NSURL *)url fromError:(NSError *)error withOptions:(NSDictionary *__autoreleasing)options
 {
     NSPersistentStore *store = nil;
-    BOOL isMigrationError = [error code] == NSMigrationError ||
-                            [error code] == NSMigrationMissingSourceModelError ||
-                            [error code] == NSPersistentStoreIncompatibleVersionHashError;
+    BOOL isMigrationError = [error code] >= NSPersistentStoreIncompatibleVersionHashError &&
+                            [error code] <= NSEntityMigrationPolicyError;
     if ([[error domain] isEqualToString:NSCocoaErrorDomain] && isMigrationError)
     {
         if ([[error domain] isEqualToString:NSCocoaErrorDomain] && isMigrationError)
